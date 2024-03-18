@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
+
 
 namespace Wordfind_Generator
 {
@@ -10,6 +11,7 @@ namespace Wordfind_Generator
     {
         BindingList<string> _words;
         List<bool> _checklist;
+        public string serialNumberString;
 
         public CreateWordFind()
         {
@@ -18,6 +20,8 @@ namespace Wordfind_Generator
 
             InitializeComponent();
             WordList.DataSource = _words;
+
+
         }
 
 
@@ -31,23 +35,29 @@ namespace Wordfind_Generator
         //Save settings to the file
         private void SaveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            string fileName = saveFileDialog1.FileName;
-            MakeCheckboxList();
+            _checklist.Clear();   // this clears out any previous checklist so "appending" to
+                                  // the list does not build the length beyond
+                                  // 8 checkboxes in the saved file.  "_checklist.Clear();"
+                                  //Load Checkboxes
 
+            string fileName = saveFileDialog1.FileName;
             File.WriteAllText(fileName, "Cheklist:\n");
 
             //Save the checkbox list into the file
-            foreach(bool value in _checklist)
+
+            MakeCheckboxList();     //checks the puzzle direction settings boxes
+
+            foreach (bool value in _checklist)
             {
-                File.AppendAllText(fileName, value.ToString()+"\n");
+                File.AppendAllText(fileName, value.ToString() + "\n");
             }
 
             //Save the word list into the file
             File.AppendAllText(fileName, "\nWordlist:\n");
 
-            foreach(string str in _words)
+            foreach (string str in _words)
             {
-                File.AppendAllText(fileName, str+"\n");
+                File.AppendAllText(fileName, str + "\n");
             }
 
             //Save dimension settings
@@ -61,15 +71,16 @@ namespace Wordfind_Generator
 
         //Open the open dialog, load configuration settings/word list 
         private void LoadButton_Click(object sender, EventArgs e)
+
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
             DialogResult result = openFileDialog1.ShowDialog();
 
             //Load settings when OK is clicked
             if (result == DialogResult.OK)
             {
-                string name = openFileDialog1.FileName; 
-
+                string name = openFileDialog1.FileName;
                 try
                 {
                     StreamReader reader = File.OpenText(name);
@@ -78,7 +89,10 @@ namespace Wordfind_Generator
 
                     while ((line = reader.ReadLine()) != null)
                     {
-                        //Load Checkboxes
+                        _checklist.Clear();   // this clears out any previous checklist so "appending" to
+                                              // the list does not build the length beyond
+                                              // 8 boxes in the saved file.  "_checklist.Clear();"
+                                              //Load Checkboxes
                         if (line == "Cheklist:")
                         {
                             while ((line = reader.ReadLine()) != "")
@@ -113,13 +127,20 @@ namespace Wordfind_Generator
                             line = reader.ReadLine();
                             WidthPanel.Value = Convert.ToInt32(line);
                         }
-                    }                    
+
+                    }
+                    // close the stream in order to "save" to the filename which was
+                    // opened using the "LOAD" button. AA3M  3/11/2024  "reader.close();"
+                    reader.Close();
+
                 }
                 catch (IOException)
                 {
                     MessageBox.Show("An IOException has occurred.");
                 }
+
             }
+
         }
 
 
@@ -163,24 +184,24 @@ namespace Wordfind_Generator
         private void ModifyButton_Click(object sender, EventArgs e)
         {
             int selectedIndex = WordList.SelectedIndex;
-            
+
 
             //Replace word if a word is selected
             if (selectedIndex != -1)
             {
                 ModifyWord mod = new ModifyWord(WordList.GetItemText(WordList.SelectedItem));
-                
+
                 DialogResult dialogresult = mod.ShowDialog();
                 _words.Insert(selectedIndex, mod.getWord());
                 _words.RemoveAt(selectedIndex + 1);
-                
+
                 mod.Dispose();
             }
             else
                 MessageBox.Show("Select a word for modification.");
 
         }
-        
+
 
         //Removes word on button click, displays error if no word is selected
         private void RemoveButton_Click(object sender, EventArgs e)
@@ -200,10 +221,16 @@ namespace Wordfind_Generator
 
 
         //Clicking the generate puzzle button 
-        private void Generate_Click(object sender, EventArgs e)
+        public void Generate_Click(object sender, EventArgs e)
         {
-            _checklist.Clear();
-            MakeCheckboxList();            
+            MakeCheckboxList();
+
+
+            int localSerialNumber = ShowPuzzle.makeSerialNumber();   //need this to call the makeSerialNumber() method from within this method
+                                                                     // that creates the random serial number printed on the pages
+                                                                     //after hitting the Generate Puzzle button.
+            serialNumberString = localSerialNumber.ToString();       //provides a text string input for serial number text box
+
 
             int height = Convert.ToInt32(HeightPanel.Value);
             int width = Convert.ToInt32(WidthPanel.Value);
@@ -218,13 +245,15 @@ namespace Wordfind_Generator
 
             height = CheckHeight(length, height);
             width = CheckWidth(length, width);
-         
+
+
+
 
             //We can proceed to generate the puzzle if at least one directional checkbox is selected
             if (DirectionalsNotUnchecked())
             {
                 WordFindGeneration wordFind = new WordFindGeneration(_checklist, _words, height, width);
-                
+
                 wordFind.GenerateNewList();
                 wordFind.PopulateGrid();
                 wordFind.InitializePuzzleGrid();
@@ -237,7 +266,7 @@ namespace Wordfind_Generator
                 {
                     ShowPuzzle show = new ShowPuzzle(answersGrid, puzzleGrid, _words);
                     show.ShowDialog();
-                    
+
                     //The box is closed
                     show.Dispose();
                 }
@@ -245,7 +274,7 @@ namespace Wordfind_Generator
                 {
                     MessageBox.Show("The puzzle was unable to be generated due to too many words being into too small a puzzle grid. \n" +
                         "Please try again with either a shorter list or larger grid size.");
-                }                
+                }
             }
             else
                 MessageBox.Show("Please select at least one directional option.");
@@ -417,7 +446,7 @@ namespace Wordfind_Generator
 
         private void saveButton_MouseHover(object sender, EventArgs e)
         {
-            saveTip.SetToolTip(saveButton, "Save the current puzzle");
+            saveTip.SetToolTip(saveButton, "Save the current puzzle.");
         }
 
         private void generateButton_MouseHover(object sender, EventArgs e)
@@ -451,7 +480,7 @@ namespace Wordfind_Generator
 
         //Check the grid size is appropriate, otherwise we must resize
         private int CheckHeight(int length, int height)
-        {            
+        {
             if (length > height)
             {
                 height = length + 1;
@@ -461,7 +490,7 @@ namespace Wordfind_Generator
             }
             return height;
         }
-        
+
 
         private int CheckWidth(int length, int width)
         {
@@ -471,7 +500,7 @@ namespace Wordfind_Generator
                 WidthPanel.Value = length + 1;
                 MessageBox.Show("A word is too big, readjusted width to " +
                     width.ToString());
-            }            
+            }
             return width;
         }
 
@@ -480,7 +509,7 @@ namespace Wordfind_Generator
         {
             string wordlist = "";
 
-            foreach(string item in _words)
+            foreach (string item in _words)
             {
                 wordlist += item + "\r\n";
             }
