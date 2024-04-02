@@ -2,17 +2,19 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Printing;
-using System.Windows.Forms;
 using System.IO;
-
+using System.Windows.Forms;
 namespace Wordfind_Generator
 {
     public partial class ShowPuzzle : Form
     {
 
+
         private string _answers, _puzzle;
         private int toggle;
         private BindingList<string> _items;
+
+        public static int serialNumber; //public static int made the variable accessible from other methods in this class.
 
         public ShowPuzzle(string answers, string puzzle, BindingList<string> items)
         {
@@ -26,7 +28,11 @@ namespace Wordfind_Generator
 
             PuzzleDisplay.Font = new Font("Courier New", 14);
             PuzzleDisplay.AppendText(_puzzle);
+
+            textBox1.Text = serialNumber.ToString(); //used to convert random number and display in the TEXTBOX
+
         }
+
 
         //Opens print dialog
         private void printButton_Click(object sender, EventArgs e)
@@ -35,13 +41,37 @@ namespace Wordfind_Generator
         }
 
 
+        public static int makeSerialNumber()   //this is called from within the Generate_Click method !!!!!
+        {
+
+            Random rnd = new Random();
+            serialNumber = rnd.Next(100, 999);
+            return ShowPuzzle.serialNumber;
+        }
+
+
         //Builds a string containing puzzle and wordlist
         private string buildPrintString()
         {
-            int columnCount = 0;
-            string printerString = _puzzle + "\r\n";
 
-            foreach(string item in _items)
+            int columnCount = 0;
+
+            // this modification allows you to print the puzzle and answer sheet separately.
+            //string printerString = _puzzle + "\r\n";    //cara's original  2/5/2024  de AA3M
+            string printerString = _puzzle;
+
+            if (toggle == 0)
+            {
+                printerString = _puzzle + "\r\n" + "Serial Number " + serialNumber;
+            }
+            else if (toggle == 1)
+            {
+                printerString = _answers + "\r\n" + "Serial Number " + serialNumber;
+            }
+
+
+
+            foreach (string item in _items)
             {
                 if (columnCount % 3 == 0)
                 {
@@ -51,10 +81,11 @@ namespace Wordfind_Generator
                 printerString += item + "\t";
                 columnCount++;
             }
+
             return printerString;
         }
 
-        //Close window
+
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -68,7 +99,7 @@ namespace Wordfind_Generator
 
         private void printButton_MouseHover(object sender, EventArgs e)
         {
-            printTip.SetToolTip(printButton, "Print the puzzle");
+            printTip.SetToolTip(printButton, "Print the puzzle view shown in window above \n use the Toggle Answers button to switch views.");
         }
 
         private void closeButton_MouseHover(object sender, EventArgs e)
@@ -136,7 +167,7 @@ namespace Wordfind_Generator
             string s = buildPrintString();
 
             PrintDocument p = new PrintDocument();
-            p.PrintPage += delegate(object sender1, PrintPageEventArgs e1)
+            p.PrintPage += delegate (object sender1, PrintPageEventArgs e1)
             {
                 e1.Graphics.DrawString(s, new Font("Courier New", 14), new SolidBrush(Color.Black),
                     new RectangleF(0, 0, p.DefaultPageSettings.PrintableArea.Width,
@@ -159,11 +190,32 @@ namespace Wordfind_Generator
             exportDialog.ShowDialog();
         }
 
+        private void label3_Click(object sender, EventArgs e)
+        {
+            // keep this empty method
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void exportDialog_FileOk(object sender, CancelEventArgs e)
         {
-            string name = exportDialog.FileName + ".txt";
 
-            File.WriteAllText(name, _puzzle);            
+            string name = exportDialog.FileName + ".txt";
+            File.WriteAllText(name, _puzzle);
+            File.AppendAllText(name, "\n\n\n\n");
+            File.AppendAllText(name, _answers);
+
         }
+
+
+
+
+
+
+
+
     }
 }
