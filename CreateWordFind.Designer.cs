@@ -245,6 +245,11 @@
             // HeightPanel
             // 
             this.HeightPanel.Location = new System.Drawing.Point(352, 89);
+            this.HeightPanel.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
             this.HeightPanel.Minimum = new decimal(new int[] {
             15,
             0,
@@ -282,7 +287,7 @@
             // 
             this.WidthPanel.Location = new System.Drawing.Point(352, 124);
             this.WidthPanel.Maximum = new decimal(new int[] {
-            500,
+            300,
             0,
             0,
             0});
