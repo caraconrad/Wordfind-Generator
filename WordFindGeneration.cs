@@ -45,11 +45,13 @@ namespace Wordfind_Generator
             random = new Random();
         }
 
+
         public bool GenerationFailed()
         {
             return _generationFailed;
         }
         
+
         //New list needs to be sorted
         public void GenerateNewList()
         {
@@ -80,7 +82,6 @@ namespace Wordfind_Generator
                     break;
                 }
             }
-            
         }
 
 

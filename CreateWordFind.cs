@@ -20,8 +20,6 @@ namespace Wordfind_Generator
 
             InitializeComponent();
             WordList.DataSource = _words;
-
-
         }
 
 
@@ -135,9 +133,7 @@ namespace Wordfind_Generator
                 {
                     MessageBox.Show("An IOException has occurred.");
                 }
-
             }
-
         }
 
 
@@ -182,7 +178,6 @@ namespace Wordfind_Generator
         {
             int selectedIndex = WordList.SelectedIndex;
 
-
             //Replace word if a word is selected
             if (selectedIndex != -1)
             {
@@ -213,7 +208,6 @@ namespace Wordfind_Generator
             {
                 MessageBox.Show("Select a word for removal.");
             }
-
         }
 
 
@@ -221,7 +215,6 @@ namespace Wordfind_Generator
         public void Generate_Click(object sender, EventArgs e)
         {
             MakeCheckboxList();
-
 
             int localSerialNumber = ShowPuzzle.makeSerialNumber();   //need this to call the makeSerialNumber() method from within this method
                                                                      // that creates the random serial number printed on the pages
@@ -242,8 +235,6 @@ namespace Wordfind_Generator
 
             height = CheckHeight(length, height);
             width = CheckWidth(length, width);
-
-
 
 
             //We can proceed to generate the puzzle if at least one directional checkbox is selected

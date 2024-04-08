@@ -69,8 +69,6 @@ namespace Wordfind_Generator
                 printerString = _answers + "\r\n" + "Serial Number " + serialNumber;
             }
 
-
-
             foreach (string item in _items)
             {
                 if (columnCount % 3 == 0)
@@ -153,6 +151,7 @@ namespace Wordfind_Generator
             }
         }
 
+
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
             print();
@@ -190,32 +189,13 @@ namespace Wordfind_Generator
             exportDialog.ShowDialog();
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-            // keep this empty method
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void exportDialog_FileOk(object sender, CancelEventArgs e)
         {
-
             string name = exportDialog.FileName + ".txt";
             File.WriteAllText(name, _puzzle);
             File.AppendAllText(name, "\n\n\n\n");
             File.AppendAllText(name, _answers);
-
         }
-
-
-
-
-
-
-
-
     }
 }
