@@ -3,20 +3,18 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 namespace Wordfind_Generator
 {
     public partial class ShowPuzzle : Form
     {
-
-
         private string _answers, _puzzle;
+        private static string _serialNumber;
         private int toggle;
         private BindingList<string> _items;
 
-        public static int serialNumber; //public static int made the variable accessible from other methods in this class.
-
-        public ShowPuzzle(string answers, string puzzle, BindingList<string> items)
+        public ShowPuzzle(string answers, string puzzle, string serialNumber, BindingList<string> items)
         {
             InitializeComponent();
 
@@ -29,8 +27,8 @@ namespace Wordfind_Generator
             PuzzleDisplay.Font = new Font("Courier New", 14);
             PuzzleDisplay.AppendText(_puzzle);
 
-            textBox1.Text = serialNumber.ToString(); //used to convert random number and display in the TEXTBOX
-
+            _serialNumber = serialNumber; 
+            SerialNumberBox.Text = serialNumber;
         }
 
 
@@ -41,19 +39,9 @@ namespace Wordfind_Generator
         }
 
 
-        public static int makeSerialNumber()   //this is called from within the Generate_Click method !!!!!
-        {
-
-            Random rnd = new Random();
-            serialNumber = rnd.Next(100, 999);
-            return ShowPuzzle.serialNumber;
-        }
-
-
         //Builds a string containing puzzle and wordlist
         private string buildPrintString()
         {
-
             int columnCount = 0;
 
             // this modification allows you to print the puzzle and answer sheet separately.
@@ -62,11 +50,11 @@ namespace Wordfind_Generator
 
             if (toggle == 0)
             {
-                printerString = _puzzle + "\r\n" + "Serial Number " + serialNumber;
+                printerString = _puzzle + "\r\n" + "Serial Number " + _serialNumber;
             }
             else if (toggle == 1)
             {
-                printerString = _answers + "\r\n" + "Serial Number " + serialNumber;
+                printerString = _answers + "\r\n" + "Serial Number " + _serialNumber;
             }
 
             foreach (string item in _items)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 //using System.Xml.Linq;
 
@@ -211,16 +212,41 @@ namespace Wordfind_Generator
         }
 
 
+        private static string makeSerialNumber() //Makes a random 8-digit hex string. Used to aid in puzzle identification and as a seed for generating the puzzle
+        {
+            Random rnd = new Random();
+            byte[] buffer = new byte[3];
+            rnd.NextBytes(buffer);
+            string result = String.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
+            return result + rnd.Next(16).ToString("X");
+        }
+
+
+        private bool serialNoBoxValid() //Checking that it's a 7 digit hex string
+        {
+            if (SerialNoBox.Text.Length == 7) //NOT FULL LOGIC YET, JUST FOR TESTING
+            {
+                return true;
+            }
+            else return false; //Placeholder for now, logic later
+        }
+
+
         //Clicking the generate puzzle button 
         public void Generate_Click(object sender, EventArgs e)
         {
             MakeCheckboxList();
 
-            int localSerialNumber = ShowPuzzle.makeSerialNumber();   //need this to call the makeSerialNumber() method from within this method
-                                                                     // that creates the random serial number printed on the pages
-                                                                     //after hitting the Generate Puzzle button.
-            serialNumberString = localSerialNumber.ToString();       //provides a text string input for serial number text box
+            string serialNumber = "";
 
+            if (serialNoBoxValid())
+            {
+                serialNumber = SerialNoBox.Text;
+            }
+            else
+            {
+                serialNumber = makeSerialNumber();
+            }
 
             int height = Convert.ToInt32(HeightPanel.Value);
             int width = Convert.ToInt32(WidthPanel.Value);
@@ -240,7 +266,7 @@ namespace Wordfind_Generator
             //We can proceed to generate the puzzle if at least one directional checkbox is selected
             if (DirectionalsNotUnchecked())
             {
-                WordFindGeneration wordFind = new WordFindGeneration(_checklist, _words, height, width);
+                WordFindGeneration wordFind = new WordFindGeneration(_checklist, _words, height, width, serialNumber);
 
                 wordFind.GenerateNewList();
                 wordFind.PopulateGrid();
@@ -252,7 +278,7 @@ namespace Wordfind_Generator
 
                 if (!wordFind.GenerationFailed()) //If the puzzle didn't fail to generate we can display it.
                 {
-                    ShowPuzzle show = new ShowPuzzle(answersGrid, puzzleGrid, _words);
+                    ShowPuzzle show = new ShowPuzzle(answersGrid, puzzleGrid, serialNumber, _words);
                     show.ShowDialog();
 
                     //The box is closed

@@ -20,7 +20,7 @@ namespace Wordfind_Generator
         private Random random;
 
         //Constructor
-        public WordFindGeneration(List<bool> checklist, BindingList<string> words, int height, int width)
+        public WordFindGeneration(List<bool> checklist, BindingList<string> words, int height, int width, string serialNumber)
         {
             _checklist = checklist;
             _originalWordList = words;
@@ -40,9 +40,9 @@ namespace Wordfind_Generator
                 {
                     _answersArray[i, j] = '*';
                     _puzzleArray[i, j] = '*';
-                }            
-
-            random = new Random();
+                }
+            int serial = int.Parse(serialNumber, System.Globalization.NumberStyles.HexNumber);
+            random = new Random(serial);
         }
 
 

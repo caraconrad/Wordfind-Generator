@@ -42,14 +42,14 @@
             this.ExportButton = new System.Windows.Forms.Button();
             this.ToggleButton = new System.Windows.Forms.Button();
             this.exportDialog = new System.Windows.Forms.SaveFileDialog();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SerialNumberBox = new System.Windows.Forms.TextBox();
             this.serialNoLabel = new System.Windows.Forms.Label();
             this.puzzleContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(292, 463);
+            this.closeButton.Location = new System.Drawing.Point(279, 445);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(106, 26);
             this.closeButton.TabIndex = 0;
@@ -126,9 +126,9 @@
             // 
             // ToggleButton
             // 
-            this.ToggleButton.Location = new System.Drawing.Point(126, 458);
+            this.ToggleButton.Location = new System.Drawing.Point(122, 445);
             this.ToggleButton.Name = "ToggleButton";
-            this.ToggleButton.Size = new System.Drawing.Size(102, 36);
+            this.ToggleButton.Size = new System.Drawing.Size(102, 26);
             this.ToggleButton.TabIndex = 5;
             this.ToggleButton.Text = "Toggle Answers";
             this.ToggleButton.UseVisualStyleBackColor = true;
@@ -138,20 +138,20 @@
             // 
             this.exportDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.exportDialog_FileOk);
             // 
-            // textBox1
+            // SerialNumberBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(109, 435);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(1);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(29, 20);
-            this.textBox1.TabIndex = 6;
+            this.SerialNumberBox.Location = new System.Drawing.Point(105, 9);
+            this.SerialNumberBox.Margin = new System.Windows.Forms.Padding(1);
+            this.SerialNumberBox.Name = "SerialNumberBox";
+            this.SerialNumberBox.ReadOnly = true;
+            this.SerialNumberBox.Size = new System.Drawing.Size(62, 20);
+            this.SerialNumberBox.TabIndex = 6;
             // 
             // serialNoLabel
             // 
             this.serialNoLabel.AutoSize = true;
             this.serialNoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serialNoLabel.Location = new System.Drawing.Point(34, 437);
+            this.serialNoLabel.Location = new System.Drawing.Point(28, 12);
             this.serialNoLabel.Name = "serialNoLabel";
             this.serialNoLabel.Size = new System.Drawing.Size(73, 13);
             this.serialNoLabel.TabIndex = 17;
@@ -159,13 +159,14 @@
             // 
             // ShowPuzzle
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(561, 525);
+            this.ClientSize = new System.Drawing.Size(516, 509);
             this.Controls.Add(this.serialNoLabel);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.SerialNumberBox);
             this.Controls.Add(this.ToggleButton);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.PuzzleDisplay);
@@ -195,7 +196,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog exportDialog;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox SerialNumberBox;
         private System.Windows.Forms.Label serialNoLabel;
     }
 }

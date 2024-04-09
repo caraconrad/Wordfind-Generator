@@ -63,6 +63,8 @@
             this.wordTextBox = new System.Windows.Forms.TextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.listboxTip = new System.Windows.Forms.ToolTip(this.components);
+            this.SerialNoLabel = new System.Windows.Forms.Label();
+            this.SerialNoBox = new System.Windows.Forms.TextBox();
             this.wordlistContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HeightPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthPanel)).BeginInit();
@@ -338,7 +340,7 @@
             // 
             // GenerateButton
             // 
-            this.GenerateButton.Location = new System.Drawing.Point(21, 277);
+            this.GenerateButton.Location = new System.Drawing.Point(25, 253);
             this.GenerateButton.Name = "GenerateButton";
             this.GenerateButton.Size = new System.Drawing.Size(133, 44);
             this.GenerateButton.TabIndex = 5;
@@ -360,6 +362,22 @@
             // 
             this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialog1_FileOk);
             // 
+            // SerialNoLabel
+            // 
+            this.SerialNoLabel.AutoSize = true;
+            this.SerialNoLabel.Location = new System.Drawing.Point(12, 308);
+            this.SerialNoLabel.Name = "SerialNoLabel";
+            this.SerialNoLabel.Size = new System.Drawing.Size(110, 13);
+            this.SerialNoLabel.TabIndex = 20;
+            this.SerialNoLabel.Text = "Serial No. (Optional)  -";
+            // 
+            // SerialNoBox
+            // 
+            this.SerialNoBox.Location = new System.Drawing.Point(127, 304);
+            this.SerialNoBox.Name = "SerialNoBox";
+            this.SerialNoBox.Size = new System.Drawing.Size(58, 20);
+            this.SerialNoBox.TabIndex = 21;
+            // 
             // CreateWordFind
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -367,6 +385,8 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(578, 373);
+            this.Controls.Add(this.SerialNoBox);
+            this.Controls.Add(this.SerialNoLabel);
             this.Controls.Add(this.wordTextBox);
             this.Controls.Add(this.GenerateButton);
             this.Controls.Add(this.loadButton);
@@ -436,5 +456,7 @@
         private System.Windows.Forms.ToolTip listboxTip;
         private System.Windows.Forms.ContextMenuStrip wordlistContextMenu;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.Label SerialNoLabel;
+        private System.Windows.Forms.TextBox SerialNoBox;
     }
 }
