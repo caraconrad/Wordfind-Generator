@@ -215,16 +215,16 @@ namespace Wordfind_Generator
         private static string makeSerialNumber() //Makes a random 8-digit hex string. Used to aid in puzzle identification and as a seed for generating the puzzle
         {
             Random rnd = new Random();
-            byte[] buffer = new byte[3];
+            byte[] buffer = new byte[4];
             rnd.NextBytes(buffer);
             string result = String.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
-            return result + rnd.Next(16).ToString("X");
+            return result;
         }
 
 
-        private bool serialNoBoxValid() //Checking that it's a 7 digit hex string
+        private bool serialNoBoxValid() //Checking that it's a 8 digit hex string
         {
-            if (SerialNoBox.Text.Length == 7) //NOT FULL LOGIC YET, JUST FOR TESTING
+            if (SerialNoBox.Text.Length == 8) //NOT FULL LOGIC YET, JUST FOR TESTING
             {
                 return true;
             }

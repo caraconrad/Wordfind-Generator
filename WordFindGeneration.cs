@@ -181,11 +181,13 @@ namespace Wordfind_Generator
             return random.Next(0, _height);
         }
 
+
         //Makes a random row index so word can't run off the bottom
         private int GenerateRowIndexLowerBounds(string word)
         {
             return random.Next(0, _height - word.Length - 1);
         }
+
 
         //Makes new random column index between 0 and width of the grid
         private int GenerateColumnIndexNoBounds()
