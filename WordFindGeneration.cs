@@ -41,7 +41,8 @@ namespace Wordfind_Generator
                     _answersArray[i, j] = '*';
                     _puzzleArray[i, j] = '*';
                 }
-            int serial = int.Parse(serialNumber, System.Globalization.NumberStyles.HexNumber);
+
+            int serial = int.Parse(serialNumber, System.Globalization.NumberStyles.HexNumber); //convert hex to 32 bit int for use as a seed in Random()
             random = new Random(serial);
         }
 

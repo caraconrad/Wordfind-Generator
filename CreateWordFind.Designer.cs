@@ -65,6 +65,7 @@
             this.listboxTip = new System.Windows.Forms.ToolTip(this.components);
             this.SerialNoLabel = new System.Windows.Forms.Label();
             this.SerialNoBox = new System.Windows.Forms.TextBox();
+            this.SerialNoContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.wordlistContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HeightPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthPanel)).BeginInit();
@@ -352,6 +353,7 @@
             // wordTextBox
             // 
             this.wordTextBox.Location = new System.Drawing.Point(25, 206);
+            this.wordTextBox.MaxLength = 300;
             this.wordTextBox.Name = "wordTextBox";
             this.wordTextBox.Size = new System.Drawing.Size(120, 20);
             this.wordTextBox.TabIndex = 3;
@@ -365,7 +367,7 @@
             // SerialNoLabel
             // 
             this.SerialNoLabel.AutoSize = true;
-            this.SerialNoLabel.Location = new System.Drawing.Point(12, 308);
+            this.SerialNoLabel.Location = new System.Drawing.Point(12, 311);
             this.SerialNoLabel.Name = "SerialNoLabel";
             this.SerialNoLabel.Size = new System.Drawing.Size(110, 13);
             this.SerialNoLabel.TabIndex = 20;
@@ -373,18 +375,27 @@
             // 
             // SerialNoBox
             // 
-            this.SerialNoBox.Location = new System.Drawing.Point(127, 304);
+            this.SerialNoBox.AcceptsTab = true;
+            this.SerialNoBox.ContextMenuStrip = this.SerialNoContextMenu;
+            this.SerialNoBox.Location = new System.Drawing.Point(128, 308);
+            this.SerialNoBox.MaxLength = 8;
             this.SerialNoBox.Name = "SerialNoBox";
             this.SerialNoBox.Size = new System.Drawing.Size(58, 20);
             this.SerialNoBox.TabIndex = 21;
+            this.SerialNoBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SerialNoBox_KeyDown);
+            this.SerialNoBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SerialNoBox_KeyPress);
+            // 
+            // SerialNoContextMenu
+            // 
+            this.SerialNoContextMenu.Name = "SerialNoContextMenu";
+            this.SerialNoContextMenu.Size = new System.Drawing.Size(61, 4);
             // 
             // CreateWordFind
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(578, 373);
+            this.ClientSize = new System.Drawing.Size(547, 346);
             this.Controls.Add(this.SerialNoBox);
             this.Controls.Add(this.SerialNoLabel);
             this.Controls.Add(this.wordTextBox);
@@ -458,5 +469,6 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.Label SerialNoLabel;
         private System.Windows.Forms.TextBox SerialNoBox;
+        private System.Windows.Forms.ContextMenuStrip SerialNoContextMenu;
     }
 }

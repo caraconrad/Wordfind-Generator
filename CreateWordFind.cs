@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 //using System.Xml.Linq;
 
@@ -224,11 +225,16 @@ namespace Wordfind_Generator
 
         private bool serialNoBoxValid() //Checking that it's a 8 digit hex string
         {
-            if (SerialNoBox.Text.Length == 8) //NOT FULL LOGIC YET, JUST FOR TESTING
+            if (Regex.IsMatch(SerialNoBox.Text, @"[a-fA-F0-9]{8}\b"))
             {
                 return true;
             }
-            else return false; //Placeholder for now, logic later
+            else if(SerialNoBox.Text.Length > 0)
+            {
+                MessageBox.Show("Only 8 character serials are valid. Generating random serial instead.");
+                return false;
+            }
+            else return false;
         }
 
 
@@ -521,13 +527,53 @@ namespace Wordfind_Generator
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             string wordlist = "";
 
             foreach (string item in _words)
             {
                 wordlist += item + "\r\n";
             }
-            Clipboard.SetText(wordlist);
+            if (wordlist != "")
+            {
+                Clipboard.SetText(wordlist);
+            }
+        }
+
+
+        //Makes sure only hex values can be entered into the Serial No box
+        private void SerialNoBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var regex = new Regex(@"[^a-fA-F0-9\b\s]");
+            if (regex.IsMatch(e.KeyChar.ToString()))
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = false;
+            }
+        }
+
+
+        //Allows for copy and paste key shortcuts
+        private void SerialNoBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                SerialNoBox.Copy();
+                e.SuppressKeyPress = true;
+            }
+
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                //Only allow paste if clipboard has valid 8-digit hex string
+                if (SerialNoBox.Text == "" && Clipboard.ContainsText(TextDataFormat.Text) && Regex.IsMatch(Clipboard.GetText(TextDataFormat.Text), @"[a-fA-F0-9]{8}\b")) 
+                {
+                    SerialNoBox.Paste();
+                    e.SuppressKeyPress = true;
+                }
+            }
         }
     }
 }
