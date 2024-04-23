@@ -99,7 +99,7 @@ namespace Wordfind_Generator
 
         private void printButton_MouseHover(object sender, EventArgs e)
         {
-            printTip.SetToolTip(printButton, "Print the puzzle view shown in window above \n use the Toggle Answers button to switch views.");
+            printTip.SetToolTip(printButton, "Print the puzzle view shown in window above \n use the Show Answers / Show Puzzle button to switch views.");
         }
 
         private void closeButton_MouseHover(object sender, EventArgs e)
