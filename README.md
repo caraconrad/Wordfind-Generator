@@ -13,7 +13,7 @@ Just a simple tool to create wordfind puzzles.
 - changed print routine to print only puzzle or answer sheets ShowPuzzle.cs buildPrintString() 
 - along with a serial number to match them using makeSerialNumber()
 - Corrected an exception error when saving back to the original loaded filename by adding 
-- reader.Close(); to the CreateWordFind.cs file (line 131)  3/15/2024  de AA3M
+- reader.Close(); to the CreateWordFind.cs file (line 134)  3/15/2024  de AA3M
 - Added _checklist.Clear(); to CreateWordFind.cs file (line 38 ) to fix checkbox settings list upon saving 
 - added ToggleButton_MouseHover for help prompt  4/22/2024 de AA3M
 - added ToggleButton prompt changes when toggled between answers and puzzle.
