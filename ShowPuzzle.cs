@@ -50,7 +50,7 @@ namespace Wordfind_Generator
         }
 
 
-        //Builds a string containing puzzle and wordlist
+        //Builds a string containing puzzle or wordlist
         private string buildPrintString()
         {
 

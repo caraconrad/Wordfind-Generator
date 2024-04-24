@@ -411,7 +411,7 @@
             this.Controls.Add(this.WordList);
             this.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.Name = "CreateWordFind";
-            this.Text = "Create WordFind";
+            this.Text = "Montour Preserve Environmental Center V1.2";
             this.wordlistContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.HeightPanel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthPanel)).EndInit();
