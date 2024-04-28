@@ -144,7 +144,7 @@
             this.SerialNumberBox.Margin = new System.Windows.Forms.Padding(1);
             this.SerialNumberBox.Name = "SerialNumberBox";
             this.SerialNumberBox.ReadOnly = true;
-            this.SerialNumberBox.Size = new System.Drawing.Size(62, 20);
+            this.SerialNumberBox.Size = new System.Drawing.Size(28, 20);
             this.SerialNumberBox.TabIndex = 6;
             // 
             // serialNoLabel

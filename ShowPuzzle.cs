@@ -181,9 +181,8 @@ namespace Wordfind_Generator
         private void exportDialog_FileOk(object sender, CancelEventArgs e)
         {
             string name = exportDialog.FileName + ".txt";
-            File.WriteAllText(name, "Serial Number: " + _serialNumber + "\n\n", System.Text.Encoding.Unicode);
             File.AppendAllText(name, _puzzle, System.Text.Encoding.Unicode);
-            File.AppendAllText(name, "\n\n\n", System.Text.Encoding.Unicode);
+            File.AppendAllText(name, "\n\n\n\n", System.Text.Encoding.Unicode);
             File.AppendAllText(name, _answers, System.Text.Encoding.Unicode);
         }
     }

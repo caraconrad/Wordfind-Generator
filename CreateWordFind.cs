@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 //using System.Xml.Linq;
 
 namespace Wordfind_Generator
@@ -213,25 +214,24 @@ namespace Wordfind_Generator
         }
 
 
-        private static string makeSerialNumber() //Makes a random 8-digit hex string. Used to aid in puzzle identification and as a seed for generating the puzzle
+        private static string makeSerialNumber() //Makes a random 3-digit number. Used to aid in puzzle identification and as a seed for generating the puzzle
         {
             Random rnd = new Random();
-            byte[] buffer = new byte[4];
-            rnd.NextBytes(buffer);
-            string result = String.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
+            const int maxValue = 999;
+            string result = rnd.Next(maxValue + 1).ToString("D3");
             return result;
         }
 
 
-        private bool serialNoBoxValid() //Checking that it's a 8 digit hex string
+        private bool serialNoBoxValid() //Checking that it's a 3 digit string
         {
-            if (Regex.IsMatch(SerialNoBox.Text, @"[a-fA-F0-9]{8}\b"))
+            if (Regex.IsMatch(SerialNoBox.Text, @"[0-9]{3}\b"))
             {
                 return true;
             }
             else if(SerialNoBox.Text.Length > 0)
             {
-                MessageBox.Show("Only 8 character serials are valid. Generating random serial instead.");
+                MessageBox.Show("Only 3 digit serials are valid. Generating random serial instead.");
                 return false;
             }
             else return false;
@@ -541,10 +541,10 @@ namespace Wordfind_Generator
         }
 
 
-        //Makes sure only hex values can be entered into the Serial No box
+        //Makes sure only digits can be entered into the Serial No box
         private void SerialNoBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            var regex = new Regex(@"[^a-fA-F0-9\b\s]");
+            var regex = new Regex(@"[^0-9\b\s]");
             if (regex.IsMatch(e.KeyChar.ToString()))
             {
                 e.Handled = true;
@@ -567,8 +567,8 @@ namespace Wordfind_Generator
 
             else if (e.Control && e.KeyCode == Keys.V)
             {
-                //Only allow paste if clipboard has valid 8-digit hex string
-                if (SerialNoBox.Text == "" && Clipboard.ContainsText(TextDataFormat.Text) && Regex.IsMatch(Clipboard.GetText(TextDataFormat.Text), @"[a-fA-F0-9]{8}\b")) 
+                //Only allow paste if clipboard has valid 3-digit number
+                if (SerialNoBox.Text == "" && Clipboard.ContainsText(TextDataFormat.Text) && Regex.IsMatch(Clipboard.GetText(TextDataFormat.Text), @"[0-9]{3}\b")) 
                 {
                     SerialNoBox.Paste();
                     e.SuppressKeyPress = true;

@@ -378,9 +378,9 @@
             this.SerialNoBox.AcceptsTab = true;
             this.SerialNoBox.ContextMenuStrip = this.SerialNoContextMenu;
             this.SerialNoBox.Location = new System.Drawing.Point(128, 308);
-            this.SerialNoBox.MaxLength = 8;
+            this.SerialNoBox.MaxLength = 3;
             this.SerialNoBox.Name = "SerialNoBox";
-            this.SerialNoBox.Size = new System.Drawing.Size(58, 20);
+            this.SerialNoBox.Size = new System.Drawing.Size(30, 20);
             this.SerialNoBox.TabIndex = 21;
             this.SerialNoBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SerialNoBox_KeyDown);
             this.SerialNoBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SerialNoBox_KeyPress);

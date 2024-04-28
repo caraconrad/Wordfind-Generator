@@ -42,7 +42,7 @@ namespace Wordfind_Generator
                     _puzzleArray[i, j] = '*';
                 }
 
-            int serial = int.Parse(serialNumber, System.Globalization.NumberStyles.HexNumber); //convert hex to 32 bit int for use as a seed in Random()
+            int serial = int.Parse(serialNumber); //parse string for int to be used as seed
             random = new Random(serial);
         }
 
