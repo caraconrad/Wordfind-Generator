@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -38,6 +39,13 @@ namespace Wordfind_Generator
         private void printButton_Click(object sender, EventArgs e)
         {
             print();
+        }
+
+        //added for printing puzzle and answers with one click 5/5/24
+        private void printbothButton_Click(object sender, EventArgs e)
+        {
+            printBoth();
+            //print();
         }
 
 
@@ -101,73 +109,149 @@ namespace Wordfind_Generator
         {
             printTip.SetToolTip(printButton, "Print the puzzle view shown in window above \n use the Show Answers / Show Puzzle button to switch views.");
         }
-
-        private void closeButton_MouseHover(object sender, EventArgs e)
+        private void printbothButton_MouseHover(object sender, EventArgs e)
         {
-            closeTip.SetToolTip(closeButton, "Return to the puzzle options");
-        }
-
-        private void ToggleButton_MouseHover(object sender, EventArgs e)
-        {
-            closeTip.SetToolTip(ToggleButton, "Switch between the puzzle and answer views");
+            printTip.SetToolTip(printbothButton, "Print the puzzle AND answer views. After printing, this window will close. \n Press the Generate button to make a new puzzle and serial number. ");
         }
 
 
-        //Toggles between showing the puzzle and showing the answers
-        private void ToggleButton_Click(object sender, EventArgs e)
-        {
-            if (toggle == 0)
+            private void closeButton_MouseHover(object sender, EventArgs e)
             {
-                PuzzleDisplay.Clear();
-                PuzzleDisplay.AppendText(_answers);
-                this.ToggleButton.Text = "Show Puzzle";  //change prompt on button  4/22/2024 de AA3M
-                toggle = 1;
+                closeTip.SetToolTip(closeButton, "Return to the puzzle options");
             }
-            else if (toggle == 1)
+
+            private void ToggleButton_MouseHover(object sender, EventArgs e)
             {
-                PuzzleDisplay.Clear();
-                PuzzleDisplay.AppendText(_puzzle);
-                this.ToggleButton.Text = "Show Answers";  //change prompt on button   4/22/2024 de AA3M
+                closeTip.SetToolTip(ToggleButton, "Switch between the puzzle and answer views");
+            }
+
+
+            //Toggles between showing the puzzle and showing the answers
+            private void ToggleButton_Click(object sender, EventArgs e)
+            {
+                if (toggle == 0)
+                {
+                    PuzzleDisplay.Clear();
+                    PuzzleDisplay.AppendText(_answers);
+                    this.ToggleButton.Text = "Show Puzzle";  //change prompt on button  4/22/2024 de AA3M
+                    toggle = 1;
+                }
+                else if (toggle == 1)
+                {
+                    PuzzleDisplay.Clear();
+                    PuzzleDisplay.AppendText(_puzzle);
+                    this.ToggleButton.Text = "Show Answers";  //change prompt on button   4/22/2024 de AA3M
+                    toggle = 0;
+                }
+            }
+
+
+            //Copy button copies what is displayed in the box
+            private void copyButton_Click(object sender, EventArgs e)
+            {
+                copy();
+            }
+
+
+            //Context menu copy option
+            private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                copy();
+            }
+
+
+            //Copies what is displayed in the rich textbox
+            private void copy()
+            {
+                if (toggle == 0)
+                {
+                    Clipboard.SetText(_puzzle);
+                }
+                else if (toggle == 1)
+                {
+                    Clipboard.SetText(_answers);
+                }
+            }
+
+            private void printToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                print();
+            }
+
+
+            private void print()
+            {
+                PrintDialog printDialog1 = new PrintDialog();
+                PrintDocument printDoc = new PrintDocument();
+
+                string s = buildPrintString();
+
+                PrintDocument p = new PrintDocument();
+                p.PrintPage += delegate (object sender1, PrintPageEventArgs e1)
+                {
+                    e1.Graphics.DrawString(s, new Font("Courier New", 14), new SolidBrush(Color.Black),
+                        new RectangleF(0, 0, p.DefaultPageSettings.PrintableArea.Width,
+                            p.DefaultPageSettings.PrintableArea.Height));
+                };
+                try
+                {
+                    p.Print();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error printing document", ex);
+                }
+            }
+
+            private void printBoth()
+            {
+
+            if (toggle == 1)  //ignore toggle view setting for printing. set toggle to zero and print
+            {
                 toggle = 0;
             }
-        }
 
 
-        //Copy button copies what is displayed in the box
-        private void copyButton_Click(object sender, EventArgs e)
-        {
-            copy();
-        }
-
-
-        //Context menu copy option
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            copy();
-        }
-
-
-        //Copies what is displayed in the rich textbox
-        private void copy()
-        {
             if (toggle == 0)
             {
-                Clipboard.SetText(_puzzle);
+                PuzzleDisplay.Clear();      //call up the answers in the puzzle view window
+                PuzzleDisplay.AppendText(_answers);
+                
+                toggle = 1;
             }
-            else if (toggle == 1)
+
+
+            PrintDialog printDialog2 = new PrintDialog();
+                PrintDocument printDoc1 = new PrintDocument();
+
+                string t = buildPrintString();
+
+                PrintDocument q = new PrintDocument();
+                q.PrintPage += delegate (object sender1, PrintPageEventArgs e1)
+                {
+                    e1.Graphics.DrawString(t, new Font("Courier New", 14), new SolidBrush(Color.Black),
+                        new RectangleF(0, 0, q.DefaultPageSettings.PrintableArea.Width,
+                            q.DefaultPageSettings.PrintableArea.Height));
+                };
+                try
+                {
+                   q.Print();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error printing document", ex);
+                }
+            // put second page printing here
+
+            if (toggle == 1)
             {
-                Clipboard.SetText(_answers);
+                PuzzleDisplay.Clear();      //call up the puzzle in the puzzle view window
+                PuzzleDisplay.AppendText(_puzzle);
+                
+                toggle = 0;
             }
-        }
-
-        private void printToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            print();
-        }
 
 
-        private void print()
-        {
             PrintDialog printDialog1 = new PrintDialog();
             PrintDocument printDoc = new PrintDocument();
 
@@ -188,41 +272,51 @@ namespace Wordfind_Generator
             {
                 throw new Exception("Error printing document", ex);
             }
-        }
+
+            this.Close();  //when using the "print puzzle and answers" button, it closes window forcing user to
+                           //generate a new puzzle with unique serial number.
+
+        }// end of  private void printBoth()
 
 
         //Saves the puzzle to text file
         private void ExportButton_Click(object sender, EventArgs e)
-        {
-            exportDialog.ShowDialog();
+            {
+                exportDialog.ShowDialog();
+            }
+
+            private void label3_Click(object sender, EventArgs e)
+            {
+                // keep this empty method
+            }
+
+            private void textBox1_TextChanged(object sender, EventArgs e)
+            {
+
+            }
+
+            private void button1_Click(object sender, EventArgs e)
+            {
+
+            }
+
+            private void exportDialog_FileOk(object sender, CancelEventArgs e)
+            {
+
+                string name = exportDialog.FileName + ".txt";
+                File.WriteAllText(name, _puzzle);
+                File.AppendAllText(name, "\n\n\n\n");
+                File.AppendAllText(name, _answers);
+
+            }
+
+
+
+
+
+
+
+
         }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-            // keep this empty method
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void exportDialog_FileOk(object sender, CancelEventArgs e)
-        {
-
-            string name = exportDialog.FileName + ".txt";
-            File.WriteAllText(name, _puzzle);
-            File.AppendAllText(name, "\n\n\n\n");
-            File.AppendAllText(name, _answers);
-
-        }
-
-
-
-
-
-
-
-
     }
-}
+

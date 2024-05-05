@@ -28,27 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.closeButton = new System.Windows.Forms.Button();
             this.copyButton = new System.Windows.Forms.Button();
             this.printButton = new System.Windows.Forms.Button();
             this.PuzzleDisplay = new System.Windows.Forms.RichTextBox();
-            this.puzzleContextMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.puzzleContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyTip = new System.Windows.Forms.ToolTip();
-            this.printTip = new System.Windows.Forms.ToolTip();
-            this.closeTip = new System.Windows.Forms.ToolTip();
+            this.copyTip = new System.Windows.Forms.ToolTip(this.components);
+            this.printTip = new System.Windows.Forms.ToolTip(this.components);
+            this.closeTip = new System.Windows.Forms.ToolTip(this.components);
             this.ExportButton = new System.Windows.Forms.Button();
             this.ToggleButton = new System.Windows.Forms.Button();
             this.exportDialog = new System.Windows.Forms.SaveFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.printbothButton = new System.Windows.Forms.Button();
             this.puzzleContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(925, 1318);
+            this.closeButton.Location = new System.Drawing.Point(1184, 1344);
             this.closeButton.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(336, 74);
@@ -72,12 +74,12 @@
             // 
             // printButton
             // 
-            this.printButton.Location = new System.Drawing.Point(646, 1136);
+            this.printButton.Location = new System.Drawing.Point(485, 1316);
             this.printButton.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(336, 74);
+            this.printButton.Size = new System.Drawing.Size(336, 102);
             this.printButton.TabIndex = 2;
-            this.printButton.Text = "Print...";
+            this.printButton.Text = "Print what you see in the window above";
             this.printButton.UseVisualStyleBackColor = true;
             this.printButton.Click += new System.EventHandler(this.printButton_Click);
             this.printButton.MouseHover += new System.EventHandler(this.printButton_MouseHover);
@@ -89,7 +91,7 @@
             this.PuzzleDisplay.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.PuzzleDisplay.Name = "PuzzleDisplay";
             this.PuzzleDisplay.ReadOnly = true;
-            this.PuzzleDisplay.Size = new System.Drawing.Size(1442, 972);
+            this.PuzzleDisplay.Size = new System.Drawing.Size(1442, 1020);
             this.PuzzleDisplay.TabIndex = 3;
             this.PuzzleDisplay.Text = "";
             this.PuzzleDisplay.WordWrap = false;
@@ -130,7 +132,7 @@
             // 
             // ToggleButton
             // 
-            this.ToggleButton.Location = new System.Drawing.Point(399, 1304);
+            this.ToggleButton.Location = new System.Drawing.Point(127, 1316);
             this.ToggleButton.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.ToggleButton.Name = "ToggleButton";
             this.ToggleButton.Size = new System.Drawing.Size(323, 102);
@@ -164,6 +166,18 @@
             this.label6.Text = "Serial Number";
             this.label6.Click += new System.EventHandler(this.label3_Click);
             // 
+            // printbothButton
+            // 
+            this.printbothButton.Location = new System.Drawing.Point(841, 1318);
+            this.printbothButton.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            this.printbothButton.Name = "printbothButton";
+            this.printbothButton.Size = new System.Drawing.Size(336, 100);
+            this.printbothButton.TabIndex = 18;
+            this.printbothButton.Text = "Print puzzle and answer";
+            this.printbothButton.UseVisualStyleBackColor = true;
+            this.printbothButton.Click += new System.EventHandler(this.printbothButton_Click);
+            this.printbothButton.MouseHover += new System.EventHandler(this.printbothButton_MouseHover);
+            // 
             // ShowPuzzle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 37F);
@@ -171,6 +185,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1650, 1486);
+            this.Controls.Add(this.printbothButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.ToggleButton);
@@ -205,5 +220,6 @@
         private System.Windows.Forms.SaveFileDialog exportDialog;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button printbothButton;
     }
 }
