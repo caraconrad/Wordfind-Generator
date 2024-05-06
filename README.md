@@ -17,3 +17,5 @@ Just a simple tool to create wordfind puzzles.
 - Added _checklist.Clear(); to CreateWordFind.cs file (line 38 ) to fix checkbox settings list upon saving 
 - added ToggleButton_MouseHover for help prompt  4/22/2024 de AA3M
 - added ToggleButton prompt changes when toggled between answers and puzzle.
+- added "print puzzle and answers" button which after printing, closes the window, and user must 
+- click Generate Puzzle which will generate a new puzzle and new serial number. 5/6/2024 de AA3M
